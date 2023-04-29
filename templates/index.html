@@ -1,0 +1,109 @@
+{% extends 'base.html'  %}
+
+{% block title %}
+    <title>Registration Form</title>
+{% endblock %}
+
+{% block dash_active %}
+    class="active"
+{% endblock %}
+
+{% block content %}  
+<div class="container">
+    <div class=" " id="">
+               <p class="lead" id="formRow">All Students Records Table</p>
+            <form name="searchform" id="searchform" action="{{ url_for('index') }}" method="POST">
+                <div class="row">
+                <div class="col-md-3">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        name="name" 
+                        id="name" 
+                        class="form-control" 
+                        placeholder="Enter Name"
+                        >    
+                </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select name="admissionstatus" class="form-control" id="admissionstatus">
+                            <option value="">select admission status</option>
+                            <option value="admitted">Admitted</option>
+                            <option value="not admitted">Not Admitted</option>
+                            <option value="undecided">Undecided</option>
+                            <option value="rejected">Rejected</option>
+                        </select> 
+                    </div>
+                    </div>
+                    <div class="col-md-2">
+                    <div class="form-group">
+                            <select name="gender" class="form-control" id="gender">
+                                <option value="">select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select> 
+                    </div>
+                    </div>
+                <div class="col-md-2">
+                <div class="form-group">
+                        <input 
+                            type="number" 
+                            name="jambScore" 
+                            id="jambScore" 
+                            class="form-control" 
+                            placeholder="Enter Jamb Score"
+                            >
+                </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit"  class="btn btn-primary btn-block ">Search</button>
+                  </div>
+                </div>    
+            </form>
+            <div class="row">
+            <div class="col-md-12">
+                <table class="table indexTable table-striped text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S/n</th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Jamb Score</th>
+                            <th>Admission Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students['rv']%}
+                        <tr>
+
+                            <td>{{ loop.index }}</td>
+                            <td>{{student[1] | capitalize}} {{student[2] | capitalize}} {{student[3] | capitalize}}</td>
+                            <td>{{student[6]}}</td>
+                            <td>{{student[12]}}</td>
+                            <td>{{student[13]}}</td>
+                            <td><button name="actionbtn" class="actionbtn" id="{{student[0]}}" onclick='location.href = "/student/" + {{student[0]}} + "/profile";' type="button">
+                            </button></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            {% if (students['get']=='get') %}
+                                <td colspan="6"><p>There is no student currently registered, kindly register new students using the portal form</p></td>
+                            {% else %}
+                                <td colspan="6"><p>There is no student that matches the searching key word </p></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+    
