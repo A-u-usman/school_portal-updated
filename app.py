@@ -244,9 +244,21 @@ def index():
         
 
 
-@app.route('/student/<id>/profile', methods=['POST','GET'])
-def profile(id):
-    student_id = id
+# @app.route('/student/<id>/profile', methods=['POST','GET'])
+# def profile(id):
+#     student_id = id
+#     conn = sqlite3.connect("database.db") #mysql.get_db()
+#     cur = conn.cursor()
+#     cur.execute('SELECT * FROM informations where id=?', (student_id))
+#     rv = cur.fetchall()
+#     print(rv[0])
+#     return render_template('profile.html', student=rv[0])
+   
+@app.route('/student/profile', methods=['POST','GET'])
+def profile2():
+    req = dict(request.form)
+    student_id = req['student_id']
+    #student_id = id
     conn = sqlite3.connect("database.db") #mysql.get_db()
     cur = conn.cursor()
     cur.execute('SELECT * FROM informations where id=?', (student_id))
@@ -254,7 +266,6 @@ def profile(id):
     print(rv[0])
     return render_template('profile.html', student=rv[0])
    
-
 
 @app.route('/changeadmissionstatus', methods=['POST'])
 def changeStatus():
